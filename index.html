@@ -1,1 +1,22 @@
-<h1>Hello World!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub page as PWA template</title>
+  <link rel="canonical" href="https://hadiyasin.github.io/pwa-app-test/" />
+  <link rel="manifest" href="/pwa-app-test/manifest.webmanifest">
+</head>
+<body>
+  <h1>GitHub page as PWA template</h1>
+    …
+  <script>
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register (
+          '/pwa-app-test/sw.js',
+          {scope: '/pwa-app-test/'}
+        )
+      }
+  </script>
+</body>
+</html>
