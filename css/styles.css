@@ -1,11 +1,14 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    font-family: Nunito;
+    font-size: 16px;
     color: #333;
     background-color: #fff;
     margin: 0;
-    padding: 2em;
+    padding: 0;
     height: 100vh;
-    background-size: 20vh;
+    /* background-size: 20vh; */
+    background-color: #f5f6f7;
 }
 h1 {
     font-size: 1.5em;
@@ -18,7 +21,84 @@ a {
     color: #369;
 }
 
+.navbar {
+    height: 64px;
+    box-shadow: 0px -2px 9px 0 rgba(0,0,0,0.25);
+}
 
-.iti {
+.form-section {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+
+    background-color: rgba(var(--bs-white-rgb)) !important;
+    box-shadow: 0px 0 1.5px 0 rgba(0,0,0,0.25);
+}
+
+.form-section.compact {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.form-section > hr {
+    border-top: 1px #e4e8ec solid !important;
+    opacity: 100% !important;
+}
+
+.form-control {
+    font-size: medium;
+    /* color: #5d7286 !important; */
+}
+
+.input-field > .form-label {
+    font-weight: 700;
+    font-size: 15px;
+    color: #223548;
+    margin-bottom: 2px;
+    padding-left: 4px;
+}
+
+.inline-form-label {
+    font-size: 16px !important;
+}
+
+.input-year {
+    width: 120px !important;
+}
+
+.form-sticky-bottom {
+    border-top: 1px #e4e8ec solid !important;
+}
+
+
+.iti.iti--allow-dropdown {
     width: 100%;
+}
+
+.iti__country-list {
+    border-radius: 6px;
+}
+
+.mb-5 {
+    margin-bottom: 2rem !important;
+}
+.mb-6 {
+    margin-bottom: 2.5rem !important;
+}
+.mb-7 {
+    margin-bottom: 3rem !important;
+}
+.mb-8 {
+    margin-bottom: 3.5rem !important;
+}
+.mb-9 {
+    margin-bottom: 4rem !important;
+}
+.mb-10 {
+    margin-bottom: 4.5rem !important;
+}
+
+.w-fit {
+    width: fit-content;
 }
