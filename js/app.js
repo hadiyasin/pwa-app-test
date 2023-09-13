@@ -7,6 +7,6 @@ $(document).ready(function(){
         let emailSubject = 'Subject';
         let emailBody = 'Body';
         window.location.href = "mailto:support@example.com?subject=" + emailSubject + "&body=" + emailBody;
-        // $(this).hide();
+        return "_blank";
     });
 });
