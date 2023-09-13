@@ -4,8 +4,7 @@ body {
     background-color: #fff;
     margin: 0;
     padding: 2em;
-    height: 90vh;
-    background: url(../img/icon.png) 95% 95% no-repeat;
+    height: 100vh;
     background-size: 20vh;
 }
 h1 {
@@ -14,9 +13,12 @@ h1 {
     margin: 0;
     padding: 0;
 }
-p {
-    width: 80vw;
-}
+
 a {
     color: #369;
+}
+
+
+.iti {
+    width: 100%;
 }

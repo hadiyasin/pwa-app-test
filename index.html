@@ -65,6 +65,16 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.standalone.min.css" integrity="sha512-D5/oUZrMTZE/y4ldsD6UOeuPR4lwjLnfNMWkjC0pffPTCVlqzcHTNvkn3dhL7C0gYifHQJAIrRTASbMvLmpEug==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker3.min.css" integrity="sha512-aQb0/doxDGrw/OC7drNaJQkIKFu6eSWnVMAwPN64p6sZKeJ4QCDYL42Rumw2ZtL8DB9f66q4CnLIUnAw28dEbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker3.standalone.min.css" integrity="sha512-t+00JqxGbnKSfg/4We7ulJjd3fGJWsleNNBSXRk9/3417ojFqSmkBfAJ/3+zpTFfGNZyKxPVGwWvaRuGdtpEEA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js" integrity="sha512-uZZS8rsETXJQX6Jy57Zdc7PAmP83GCjC1F/LX0xUj12wY5SlfUX+CVnYFEX89doutQPeFbI9FjUCkpuTWqlBwg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.css" integrity="sha512-s51TDsIcMqlh1YdQbF3Vj4StcU/5s97VyLEEpkPWwP0CJfjZ/C5zAaHnG+DZroGDn1UagQezDEy61jP4yoi4vQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput-jquery.min.js" integrity="sha512-sVhsc+r7sEickzS6LohO+VDVv2ler/3QY7op8ScWV8KVLLq+m1WAl6uplr/YHmqI0L0j99ehNRh2cIwn7zXcdg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <link rel="stylesheet" href="css/styles.css">
 
 </head>
@@ -72,19 +82,44 @@
   
   <form>
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      <label for="cropYearPicker" class="form-label">Crop Year</label>
+      <input id="cropYearPicker" type="text" data-provide="datepicker" data-date-format="yyyy" class="form-control" aria-describedby="emailHelp">
+      <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1">
+      <label for="nameInput" class="form-label">Name</label>
+      <input type="text" class="form-control" id="nameInput" placeholder="Your name" pattern="[a-zA-Z0-9\s]+">
     </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    <div class="mb-3">
+      <label for="phoneNumberInput" class="form-label">Phone</label>
+      <input type="tel" class="form-control w-100" id="phoneNumberInput" required>
     </div>
-    <button id="sbmt" type="button" class="btn btn-primary">Submit</button>
+    <div class="mb-3">
+      <label for="ticketNmberInput" class="form-label">Ticket #</label>
+      <input type="text" class="form-control" id="ticketNmberInput" placeholder="00123456789" pattern="[a-zA-Z0-9\s]+">
+    </div>
+    <div class="mb-3">
+      <label for="policyNumberInput" class="form-label">Policy #</label>
+      <input type="text" class="form-control" id="policyNumberInput" placeholder="0123456" pattern="[a-zA-Z0-9\s]+">
+    </div>
+    <div class="mb-3">
+      <label for="terminalInput" class="form-label">Terminal/Elevator</label>
+      <input type="text" class="form-control" id="terminalInput" placeholder="" pattern="[a-zA-Z0-9\s]+">
+    </div>
+    <div class="mb-3">
+      <label for="cityStateInput" class="form-label">City & State</label>
+      <input type="text" class="form-control" id="cityStateInput" placeholder="Select City & State">
+    </div>
+
+    <div class="mb-3">
+      <label for="commentsTextArea" class="form-label">Comments</label>
+      <textarea class="form-control" placeholder="Add your comments here" id="commentsTextArea"></textarea>
+    </div>
+
+    <br>
+    <br>
+
+    <button id="sbmt" type="submit" class="btn btn-primary w-100 py-2">Send Elevator Ticket</button>
   </form>
 
   <script>
