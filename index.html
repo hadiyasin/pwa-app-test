@@ -106,7 +106,8 @@
       </div>
     </nav>
     <div class="screen-content container table-background px-0">
-      <form class="pt-6 h-100 overflow-scroll"  action="javascript:void(0);">
+      <form class="needs-validation pt-6 h-100 overflow-scroll" novalidate>
+        <!-- action="javascript:void(0);" -->
         <h5 class="mx-3 mb-4 fw-bolder">Commodity Ticket Information</h5>
 
         <div class="form-section compact mb-5">
@@ -122,11 +123,13 @@
           <div class="input-field">
             <label for="nameInput" class="form-label">Name</label>
             <input type="text" class="form-control" id="nameInput" name="name" placeholder="Your name" pattern="[a-zA-Z0-9\s]+" required>
+            <div class="invalid-feedback">Please enter you name.</div>
           </div>
           <hr>
           <div class="input-field">
             <label for="phoneNumberInput" class="form-label">Phone</label>
             <input type="tel" class="form-control form-control-lg w-100" name="phone" id="phoneNumberInput" required>
+            <div class="invalid-feedback">Please enter a valid phone number.</div>
           </div>
         </div>
         
@@ -134,16 +137,19 @@
           <div class="input-field">
             <label for="ticketNmberInput" class="form-label">Ticket #</label>
             <input type="text" class="form-control form-control-lg" id="ticketNmberInput" name="ticket-number" placeholder="00123456789" pattern="[a-zA-Z0-9\s]+" required>
+            <div class="invalid-feedback">Please enter a valid ticket number.</div>
           </div>
           <hr>
           <div class="input-field">
             <label for="policyNumberInput" class="form-label">Policy #</label>
             <input type="text" class="form-control form-control-lg" id="policyNumberInput" name="policy-number" placeholder="0123456" pattern="[a-zA-Z0-9\s]+" required>
+            <div class="invalid-feedback">Please enter a valid policy number.</div>
           </div>
           <hr>
           <div class="input-field">
             <label for="terminalInput" class="form-label">Terminal/Elevator</label>
             <input type="text" class="form-control form-control-lg" id="terminalInput" name="terminal" placeholder="" pattern="[a-zA-Z0-9\s]+" required>
+            <div class="invalid-feedback">Please enter a valid Terminal/Elevator.</div>
           </div>
           <hr>
           <div class="input-field">
@@ -154,6 +160,7 @@
                 <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"/>
               </svg>
             </div>
+            <div class="city-feedback invalid-feedback">Please select city & state.</div>
             <!-- <input type="text" class="form-control form-control-lg" id="cityStateInput" placeholder="Select City & State" required> -->
             <!-- <select class="form-control" data-live-search="true">
               <optgroup label="Picnic">
@@ -180,7 +187,7 @@
         <br>
 
         <div class="form-sticky-bottom sticky-bottom z-1 w-100 bg-white pt-2 pb-3 px-3">
-          <button id="sbmt" type="submit" class="btn btn-primary w-100 py-3 rounded-3_5 fw-bolder">Send Elevator Ticket</button>
+          <button id="sbmt" type="button" class="btn btn-primary w-100 py-3 rounded-3_5 fw-bolder">Send Elevator Ticket</button>
         </div>
       </form>
     </div>

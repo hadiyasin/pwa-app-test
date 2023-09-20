@@ -158,8 +158,24 @@ $(document).ready(function(){
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.6/js/utils.js"
     });
 
-    $("#sbmt").click(function(){
-        console.log('Clicked!');
+    $("#sbmt").click(function(e){
+        const form = $(this).closest('form.needs-validation').get(0);
+        const cityState = getCityStateString();
+        
+        if(!form || form === undefined || form === null){
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+        } else if (!form.checkValidity() || !cityState) {
+            console.log('invalid!', form);
+            e.preventDefault();
+            e.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+        } else {
+            form.classList.add('was-validated')
+        }
+
         let formData = Array.from($(".screen.home form").serializeArray());
         if(formData !== undefined && formData !== null && typeof formData === 'object' && !Array.isArray(formData)){
             const cityState = getCityStateString();

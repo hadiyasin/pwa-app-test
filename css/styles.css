@@ -279,6 +279,9 @@ body[app-mode="installed"] .screen-content {
     margin-top: 0.25rem !important;
 }
 
+form.was-validated:has(.selected-city-title.text-muted) .city-feedback.invalid-feedback {
+    display: block !important;
+}
 
 
 .force-hide {
