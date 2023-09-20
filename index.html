@@ -106,13 +106,13 @@
       </div>
     </nav>
     <div class="screen-content container table-background px-0">
-      <form class="pt-6 h-100 overflow-scroll">
+      <form class="pt-6 h-100 overflow-scroll"  action="javascript:void(0);">
         <h5 class="mx-3 mb-4 fw-bolder">Commodity Ticket Information</h5>
 
         <div class="form-section compact mb-5">
           <div class="input-field hstack">
             <label for="cropYearPickers" class="form-label inline-form-label text-nowrap">Crop Year</label>
-            <input id="cropYearPickers" type="number" class="form-control ms-auto w-fit input-year text-end border-0" placeholder="2023" aria-describedby="emailHelp" required>
+            <input id="cropYearPickers" type="number" class="form-control ms-auto w-fit input-year text-end border-0" name="crop-year" placeholder="2023" aria-describedby="emailHelp" required>
             <!-- <input id="cropYearPickers" type="number" data-provide="datepicker" data-date-format="yyyy" class="form-control ms-auto" aria-describedby="emailHelp" required> -->
             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
@@ -121,29 +121,29 @@
         <div class="form-section mb-5">
           <div class="input-field">
             <label for="nameInput" class="form-label">Name</label>
-            <input type="text" class="form-control" id="nameInput" placeholder="Your name" pattern="[a-zA-Z0-9\s]+" required>
+            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Your name" pattern="[a-zA-Z0-9\s]+" required>
           </div>
           <hr>
           <div class="input-field">
             <label for="phoneNumberInput" class="form-label">Phone</label>
-            <input type="tel" class="form-control form-control-lg w-100" id="phoneNumberInput" required>
+            <input type="tel" class="form-control form-control-lg w-100" name="phone" id="phoneNumberInput" required>
           </div>
         </div>
         
         <div class="form-section mb-5">
           <div class="input-field">
             <label for="ticketNmberInput" class="form-label">Ticket #</label>
-            <input type="text" class="form-control form-control-lg" id="ticketNmberInput" placeholder="00123456789" pattern="[a-zA-Z0-9\s]+" required>
+            <input type="text" class="form-control form-control-lg" id="ticketNmberInput" name="ticket-number" placeholder="00123456789" pattern="[a-zA-Z0-9\s]+" required>
           </div>
           <hr>
           <div class="input-field">
             <label for="policyNumberInput" class="form-label">Policy #</label>
-            <input type="text" class="form-control form-control-lg" id="policyNumberInput" placeholder="0123456" pattern="[a-zA-Z0-9\s]+" required>
+            <input type="text" class="form-control form-control-lg" id="policyNumberInput" name="policy-number" placeholder="0123456" pattern="[a-zA-Z0-9\s]+" required>
           </div>
           <hr>
           <div class="input-field">
             <label for="terminalInput" class="form-label">Terminal/Elevator</label>
-            <input type="text" class="form-control form-control-lg" id="terminalInput" placeholder="" pattern="[a-zA-Z0-9\s]+" required>
+            <input type="text" class="form-control form-control-lg" id="terminalInput" name="terminal" placeholder="" pattern="[a-zA-Z0-9\s]+" required>
           </div>
           <hr>
           <div class="input-field">
@@ -173,7 +173,7 @@
         <div class="form-section">
           <div class="input-field">
             <label for="commentsTextArea" class="form-label">Comments</label>
-            <textarea  id="commentsTextArea" class="form-control form-control-lg border-0 autoExpand" rows='1' data-min-rows='1' placeholder="Add your comments here"></textarea>
+            <textarea  id="commentsTextArea" name="comments" class="form-control form-control-lg border-0 autoExpand" rows='1' data-min-rows='1' placeholder="Add your comments here"></textarea>
           </div>
         </div>
         <br>

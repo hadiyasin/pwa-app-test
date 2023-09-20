@@ -86,9 +86,18 @@ $(document).ready(function(){
         return undefined;
     }
 
+    function getCityStateString(){
+        const city = selectedCity?.name;
+        const state = selectedCity?.state;
+        const cityState = [state, city].filter(s => s !== undefined && s !== null && typeof s === 'string' && s.trim().length !== 0).join(', ');
+        if(cityState !== undefined && cityState !== null && typeof cityState === 'string' && cityState.trim().length > 0)
+            return cityState;
+    }
+
     function setSelectedCity(city){
         const cityObj = getCityById(city);
         if(cityObj !== undefined && cityObj !== null){
+            selectedCity = cityObj;
             $('#slct-city-btn-title').removeClass('text-muted').text(`${cityObj.state}, ${cityObj.name}`);
             $(`.city-option`).removeClass('selected');
             const selectedEl = Array.from($(`.city-option`)).filter(el => el?.id === `city[${cityObj.id}]`)[0];
@@ -147,12 +156,24 @@ $(document).ready(function(){
 
     $("#phoneNumberInput").intlTelInput({
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.6/js/utils.js"
-      });
+    });
 
     $("#sbmt").click(function(){
         console.log('Clicked!');
-        let emailSubject = 'Subject';
-        let emailBody = 'Body';
+        let formData = Array.from($(".screen.home form").serializeArray());
+        if(formData !== undefined && formData !== null && typeof formData === 'object' && !Array.isArray(formData)){
+            const cityState = getCityStateString();
+            if(cityState !== undefined && cityState !== null && typeof cityState === 'string' && cityState.trim().length > 0)
+                formData['city'] = cityState;
+        } else if(formData !== undefined && formData !== null && Array.isArray(formData)){
+            const cityState = getCityStateString();
+            if(cityState !== undefined && cityState !== null && typeof cityState === 'string' && cityState.trim().length > 0)
+                formData.push({name: 'city', value: cityState});
+        }
+
+        console.log(formData);
+        let emailSubject = 'Commodity Ticket Information';
+        let emailBody = JSON.stringify(formData);
         window.location.href = "mailto:support@example.com?subject=" + emailSubject + "&body=" + emailBody;
         return "_blank";
     });
