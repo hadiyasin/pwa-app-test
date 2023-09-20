@@ -19,6 +19,7 @@ $(document).ready(function(){
 
     // from a jQuery collection
     autosize($('textarea.autoExpand'));
+    $('#cropYearPickers').attr('placeholder', `${(new Date()).getFullYear()}`)
 
     function stateCityPickerHtmlContent(selectedCityId){
         const us = USLocations;
@@ -198,7 +199,14 @@ $(document).ready(function(){
     }
 
     $("#slct-city-btn").click(function(){
+        
         toggleVisibility('#country-picker-screen');
+
+        const elm = Array.from($('#country-picker-screen .city-option.selected'))[0];
+        elm && elm.scrollIntoView({block: 'center'});
+
+        // const slctd = $('#country-picker-screen');
+        // slctd && $('html, body').scrollTop(slctd.offset().top);
     });
 
     $("#country-picker-screen .navbar-back").click(function(){
@@ -206,33 +214,3 @@ $(document).ready(function(){
         $('#country-picker-screen #city-search-input').val('').trigger('input').blur();
     });
 });
-
-
-function getScrollHeight(elm){
-    var savedValue = elm.value;
-    elm.value = '';
-    elm._baseScrollHeight = elm.scrollHeight;
-    elm.value = savedValue;
-}
-  
-function onExpandableTextareaInput({ target:elm }){
-    // make sure the input event originated from a textarea and it's desired to be auto-expandable
-    if(!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA') return;
-    
-    var minRows = elm.getAttribute('data-min-rows') | 0, rows;
-    !elm._baseScrollHeight && getScrollHeight(elm);
-
-    let lineHeightCss = $(elm).css('font-size');
-    let lineHeight = lineHeightCss !== undefined && lineHeightCss !== null ? parseInt(lineHeightCss) : 16;
-    
-    let paddingTopCss = $(elm).css('padding-top');
-    let paddingBottomCss = $(elm).css('padding-bottom');
-    let paddingTop = paddingTopCss !== undefined && paddingTopCss !== null ? parseInt(paddingTopCss) : 0;
-    let paddingBottom = paddingBottomCss !== undefined && paddingBottomCss !== null ? parseInt(paddingBottomCss) : 0;
-    let paddingV = paddingTop + paddingBottom;
-
-    elm.rows = minRows;
-    rows = Math.floor((elm.scrollHeight - elm._baseScrollHeight) / (lineHeight));
-    console.log('lineHeight:', lineHeight, rows, 'min:', minRows, 'scroll:', elm._baseScrollHeight, 'padding:', paddingV);
-    elm.rows = minRows + rows;
-}
