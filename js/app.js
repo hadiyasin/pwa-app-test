@@ -6,6 +6,7 @@ function biCheckLg(className, size){
   </svg>`;
 }
 
+const DISMISS_COUNTRY_PICKER_ON_SELECT = true;
 
 $(document).ready(function(){
     console.log('Document ready!');
@@ -108,8 +109,12 @@ $(document).ready(function(){
             return;
 
         const cityId = cityIdByElementId(event.target?.id);
-        if(cityId !== undefined && cityId !== null)
+        if(cityId !== undefined && cityId !== null){
             setSelectedCity(cityId);
+            if(DISMISS_COUNTRY_PICKER_ON_SELECT === true){
+                $("#country-picker-screen .navbar-back").trigger('click');
+            }
+        }
     })
 
     $('#city-search-input').on('input', function (e) {
