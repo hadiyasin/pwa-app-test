@@ -30,6 +30,39 @@ a {
     color: #369;
 }
 
+textarea.autoExpand {
+    padding-left: 0.4rem !important;
+    padding-right: 0.4rem !important;
+}
+
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #c4c4c5;
+    opacity: 1; /* Firefox */
+    font-weight: 400;
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #c4c4c5;
+    font-weight: 400;
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+    color: #c4c4c5;
+    font-weight: 400;
+}
+
+.form-control:focus {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-color: #0070f3;
+    border-width: 2px;
+    border-radius: 0.5rem;
+    box-shadow: none;
+}
+
+
+
 .navbar {
     height: 64px;
     box-shadow: 0px -2px 9px 0 rgba(0,0,0,0.25);
@@ -91,7 +124,8 @@ a {
 }
 
 .form-control {
-    font-size: medium;
+    font-size: 16px;
+    font-weight: 700;
     /* color: #5d7286 !important; */
 }
 
@@ -184,10 +218,12 @@ a {
 
 .screen-content {
     width: 100% !important;
-    height: calc(100% - 64px - 34px) !important;
-    /* position: absolute !important; */
+    height: calc(100% - 64px) !important;
     overflow: hidden !important;
-    /* overflow: scroll !important; */
+}
+
+body[app-mode="installed"] .screen-content {
+    height: calc(100% - 64px - 34px) !important;
 }
 
 /* .screen.visible {
