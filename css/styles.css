@@ -283,6 +283,12 @@ form.was-validated:has(.selected-city-title.text-muted) .city-feedback.invalid-f
     display: block !important;
 }
 
+form.was-validated.invalid-only .form-control:valid {
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    background-image: unset;
+    padding-right: 0.375rem;
+}
+
 
 .force-hide {
     display: none !important;
