@@ -1,6 +1,3 @@
-console.log('I am running!');
-console.log('US:', USLocations);
-
 function biCheckLg(className, size){
     const width = size !== undefined && size !== null && typeof size === 'number' && !isNaN(size) ? size : 24;
     const cls = className !== undefined && className !== null && typeof className ==='string' ? className.trim() : '';
@@ -22,11 +19,6 @@ $(document).ready(function(){
 
     // from a jQuery collection
     autosize($('textarea.autoExpand'));
-    //  the following simple make the textbox "Auto-Expand" as it is typed in
-    // $('#commentsTextArea').on('keyup', function(e) {
-    //     // the following will help the text expand as typing takes place
-    //     onExpandableTextareaInput(e);
-    // });
 
     function stateCityPickerHtmlContent(selectedCityId){
         const us = USLocations;
@@ -107,7 +99,7 @@ $(document).ready(function(){
         }
     }
 
-    $('#country-picker-list-container').html(stateCityPickerHtmlContent('new-york-buffalo'));
+    $('#country-picker-list-container').html(stateCityPickerHtmlContent(selectedCity?.id));
 
     setSelectedCity(selectedCity?.id);
     $('.city-option').click(function(event){
@@ -120,7 +112,6 @@ $(document).ready(function(){
     })
 
     $('#city-search-input').on('input', function (e) {
-        console.log('e:', e, 'this:', this, this.value);
         if(this.value === undefined || this.value === null || typeof this.value !== 'string' || this.value.trim().length === 0){
             // Empty input.
             $('.city-option').removeClass('force-hide');
@@ -207,13 +198,12 @@ $(document).ready(function(){
     }
 
     $("#slct-city-btn").click(function(){
-        console.log('Select city!');
         toggleVisibility('#country-picker-screen');
     });
 
-    $(".navbar-back").click(function(){
-        console.log('Back Clicked!');
+    $("#country-picker-screen .navbar-back").click(function(){
         toggleVisibility('#country-picker-screen');
+        $('#country-picker-screen #city-search-input').val('').trigger('input').blur();
     });
 });
 
