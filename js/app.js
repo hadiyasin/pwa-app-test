@@ -20,7 +20,22 @@ $(document).ready(function(){
 
     // from a jQuery collection
     autosize($('textarea.autoExpand'));
-    $('#cropYearPickers').attr('placeholder', `${(new Date()).getFullYear()}`)
+    $('#cropYearPickers').attr('placeholder', `${(new Date()).getFullYear()}`);
+    $('#cropYearPickers').val(`${(new Date()).getFullYear()}`);
+
+    const prevForm = getFormFromLocalStorage();
+    if(prevForm !== undefined && prevForm !== null && Array.isArray(prevForm)){
+        console.log('previous session:', prevForm);
+        const cropYear = prevForm.find(dt => dt.name === 'crop-year');
+        const fullname = prevForm.find(dt => dt.name === 'name');
+        const phoneNumber = prevForm.find(dt => dt.name === 'phone');
+        const policyNumber = prevForm.find(dt => dt.name === 'policy-number');
+
+        cropYear && cropYear.value && $('#cropYearPickers').val(cropYear.value);
+        fullname && fullname.value && $('#nameInput').val(fullname.value);
+        phoneNumber && phoneNumber.value && $('#phoneNumberInput').val(phoneNumber.value);
+        policyNumber && policyNumber.value && $('#policyNumberInput').val(policyNumber.value);
+    }
 
     function stateCityPickerHtmlContent(selectedCityId){
         const us = USLocations;
@@ -161,7 +176,7 @@ $(document).ready(function(){
     $("#sbmt").click(function(e){
         const form = $(this).closest('form.needs-validation').get(0);
         const cityState = getCityStateString();
-        
+
         if(!form || form === undefined || form === null){
             e.preventDefault();
             e.stopPropagation();
@@ -181,18 +196,46 @@ $(document).ready(function(){
             const cityState = getCityStateString();
             if(cityState !== undefined && cityState !== null && typeof cityState === 'string' && cityState.trim().length > 0)
                 formData['city'] = cityState;
+                formData['city-id'] = selectedCity?.id;
         } else if(formData !== undefined && formData !== null && Array.isArray(formData)){
             const cityState = getCityStateString();
-            if(cityState !== undefined && cityState !== null && typeof cityState === 'string' && cityState.trim().length > 0)
+            if(cityState !== undefined && cityState !== null && typeof cityState === 'string' && cityState.trim().length > 0){
                 formData.push({name: 'city', value: cityState});
+                formData.push({name: 'city-id', value: selectedCity?.id});
+            }
         }
 
         console.log(formData);
         let emailSubject = 'Commodity Ticket Information';
         let emailBody = JSON.stringify(formData);
+
+        saveFormInLocalStorage(formData);
         window.location.href = "mailto:support@example.com?subject=" + emailSubject + "&body=" + emailBody;
         return "_blank";
     });
+
+    function saveFormInLocalStorage(form){
+        if(form === undefined && form === null || (typeof form === 'number' && isNaN(form)) || (typeof form === 'string' && form.trim().length === 0)){
+            // Clear storgae.
+            localStorage?.removeItem('ticket-form-data');
+        } else {
+            // Save into storage.
+            localStorage?.setItem('ticket-form-data', JSON.stringify(form));
+        }
+    }
+
+    function getFormFromLocalStorage(){
+        const data = localStorage?.getItem('ticket-form-data');
+        if(data === undefined || data === null || typeof data !== 'string' || data.trim().length === 0){
+            return undefined;
+        } else {
+            try {
+                return JSON.parse(data);
+            } catch {
+                return undefined;
+            }
+        }
+    }
 
     const toggleDisplay = function(selector, duration, callback){
         if($(selector).hasClass('d-none')){
