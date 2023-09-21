@@ -207,10 +207,12 @@ $(document).ready(function(){
 
         console.log(formData);
         let emailSubject = 'Commodity Ticket Information';
-        let emailBody = JSON.stringify(formData);
+        const finalFormData = formData.filter(fd => fd.name !== 'city-id' && fd.value !== undefined && fd.value !== null && `${fd.value}`.trim().length > 0).map((fd) => `${fd.name}: ${fd.value}`).join(';%0D%0A');
+        let emailBody = finalFormData;//JSON.stringify(finalFormData);
+        
 
         saveFormInLocalStorage(formData);
-        window.location.href = "mailto:support@example.com?subject=" + emailSubject + "&body=" + emailBody;
+        window.location.href = "mailto:graintickets@sompo-intl.com?subject=" + emailSubject + "&body=" + emailBody;
         return "_blank";
     });
 
