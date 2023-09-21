@@ -196,7 +196,9 @@ $(document).ready(function(){
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.6/js/utils.js"
     });
 
-    phoneNumberInput && phoneNumberInput.setNumber && phoneNumberInput.setNumber(phoneNumber);
+    if(phoneNumber !== undefined && phoneNumber !== null && typeof phoneNumber === 'string' && phoneNumber.trim().length > 0){
+        phoneNumberInput && phoneNumberInput.setNumber && phoneNumberInput.setNumber(phoneNumber);
+    }
 
     $("#phoneNumberInput").on('input', function(e){
         const placeholder = e?.target?.placeholder;
