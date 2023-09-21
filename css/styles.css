@@ -235,6 +235,26 @@ textarea.autoExpand {
     width: fit-content;
 }
 
+.h-90 {
+    height: 90%;
+}
+
+.h-80 {
+    height: 80%;
+}
+
+.h-70 {
+    height: 70%;
+}
+
+.h-60 {
+    height: 60%;
+}
+
+.h-50 {
+    height: 50%;
+}
+
 
 .screen {
     display: none;
