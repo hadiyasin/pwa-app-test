@@ -20,6 +20,7 @@ $(document).ready(function(){
 
     // from a jQuery collection
     autosize($('textarea.autoExpand'));
+    $("#cropYearPickers").inputSpinner({editor: customEditors.RawEditor});
     $('#cropYearPickers').attr('placeholder', `${(new Date()).getFullYear()}`);
     $('#cropYearPickers').val(`${(new Date()).getFullYear()}`);
 
@@ -182,7 +183,6 @@ $(document).ready(function(){
             e.stopPropagation();
             return;
         } else if (!form.checkValidity() || !cityState) {
-            console.log('invalid!', form);
             e.preventDefault();
             e.stopPropagation();
             form.classList.add('was-validated');

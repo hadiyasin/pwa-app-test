@@ -142,7 +142,37 @@ textarea.autoExpand {
 }
 
 .input-year {
-    width: 120px !important;
+    max-width: 80px !important;
+}
+
+.input-year + .input-group {
+    width: fit-content;
+}
+
+.input-year + .input-group .input-group-prepend button {
+    border-color: transparent !important;
+    border-width: 0 !important;
+}
+
+.input-year + .input-group .input-group-append button {
+    border-color: transparent !important;
+    border-width: 0 !important;
+}
+
+.input-year + .input-group .input-group-prepend button:hover {
+    background-color: #f5f6f7 !important;
+    color: var(--bs-btn-color) !important;
+}
+
+.input-year + .input-group .input-group-append button:hover {
+    background-color: #f5f6f7 !important;
+    color: var(--bs-btn-color) !important;
+}
+
+
+
+.form-section:has(.input-year) {
+    padding-right: 0px !important;
 }
 
 .form-sticky-bottom {
@@ -222,7 +252,7 @@ textarea.autoExpand {
     overflow: hidden !important;
 }
 
-body[app-mode="installed"] .screen-content {
+body[app-mode="installed"] .screen-content:has(.sticky-bottom) {
     height: calc(100% - 64px - 34px) !important;
 }
 
