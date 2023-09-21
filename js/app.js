@@ -11,6 +11,8 @@ const DISMISS_COUNTRY_PICKER_ON_SELECT = true;
 $(document).ready(function(){
     console.log('Document ready!');
     let selectedCity = undefined;
+    let phoneNumberCountry = undefined;
+    let phoneNumber = undefined;
 
     if (window.matchMedia('(display-mode: standalone)').matches) {
         $('body').attr('app-mode', 'installed');
@@ -26,16 +28,19 @@ $(document).ready(function(){
 
     const prevForm = getFormFromLocalStorage();
     if(prevForm !== undefined && prevForm !== null && Array.isArray(prevForm)){
-        console.log('previous session:', prevForm);
+        //console.log('previous session:', prevForm);
         const cropYear = prevForm.find(dt => dt.name === 'crop-year');
         const fullname = prevForm.find(dt => dt.name === 'name');
-        const phoneNumber = prevForm.find(dt => dt.name === 'phone');
+        const _phoneNumber = prevForm.find(dt => dt.name === 'phone');
+        const _phoneNumberCountry = prevForm.find(dt => dt.name === 'phone-info');
         const policyNumber = prevForm.find(dt => dt.name === 'policy-number');
 
         cropYear && cropYear.value && $('#cropYearPickers').val(cropYear.value);
         fullname && fullname.value && $('#nameInput').val(fullname.value);
-        phoneNumber && phoneNumber.value && $('#phoneNumberInput').val(phoneNumber.value);
+        _phoneNumber && _phoneNumber.value && $('#phoneNumberInput').val(_phoneNumber.value);
         policyNumber && policyNumber.value && $('#policyNumberInput').val(policyNumber.value);
+        phoneNumberCountry = _phoneNumberCountry?.value;
+        phoneNumber = _phoneNumber?.value;
     }
 
     function stateCityPickerHtmlContent(selectedCityId){
@@ -170,9 +175,120 @@ $(document).ready(function(){
         toggleActive: true
     });
 
-    $("#phoneNumberInput").intlTelInput({
+    const phoneNumberInput = window.intlTelInput($("#phoneNumberInput").get(0), {
+        autoPlaceholder: 'polite',
+        nationalMode: true,
+        separateDialCode: false,
+        // placeholderNumberType: 'FIXED_LINE_OR_MOBILE',
+        initialCountry: (function(code){
+            if(code !== undefined && code !== null){
+                if(typeof code === 'string' && code.trim().length > 0){
+                    return code.trim();
+                } else if(typeof code === 'object' && Object.keys(code).length > 0 && code.iso2){
+                    return typeof code.iso2 === 'string' && code.iso2.trim().length > 0 ? code.iso2.trim() : '';
+                } else {
+                    return '';
+                }
+            } else {
+                return '';
+            }
+        })(phoneNumberCountry),
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.6/js/utils.js"
     });
+
+    phoneNumberInput && phoneNumberInput.setNumber && phoneNumberInput.setNumber(phoneNumber);
+
+    $("#phoneNumberInput").on('input', function(e){
+        const placeholder = e?.target?.placeholder;
+        if(placeholder === undefined || placeholder === null || 
+            (typeof placeholder === 'string' && placeholder.trim().length === 0) || 
+            (typeof placeholder === 'number')){
+            return;
+        }
+
+        const ptrn = `${placeholder}`.replace(/[0-9]/g, '0');
+        //const pls = `${placeholder}`.replace(/[0-9]/g, '_');
+        $(this).mask(ptrn);
+
+        const form = $(this).closest('form');
+        if(form && form.hasClass && form.hasClass('was-validated'))
+            validatePhoneNumber(this);
+
+        //console.log('placeholder:', e.target.placeholder, 'pattern:', ptrn, 'placeholder:', pls);
+    });
+
+    function validatePhoneNumber(input, checkOnly){
+        if(input === undefined || input === null)
+            return true;
+
+        const iti = window?.intlTelInputGlobals?.getInstance(input);
+        if(iti === undefined || iti === null)
+            return true;
+
+        const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+        let isValid = true;
+        let errorMessage = undefined;
+        if(input.value.trim().length === 0) {
+            if(input.required === true){
+                isValid = false;
+                errorMessage = 'Please enter a phone number';
+            } else {
+                // Field is empty, and not required.
+                isValid = true;
+            }
+        } else if(iti.isValidNumber()){
+            // It's valid.
+            isValid = true;
+        } else {
+            isValid = false;
+            const errorCode = iti.getValidationError();
+            errorMessage = errorMap[errorCode];
+        }
+
+        if(checkOnly === true){
+            return isValid;
+        }
+
+        const validMsg = $(input).closest('.input-field,.input-group').children('.valid-feedback').get(0);
+        const errorMsg = $(input).closest('.input-field,.input-group').children('.invalid-feedback').get(0);
+
+        if(isValid === true){
+            input.classList.remove("invalid");
+            input.setCustomValidity(errorMessage ?? '');
+
+            if(validMsg){
+                validMsg.classList.remove("hide");
+                validMsg.classList.add("checked");
+            }
+            if(errorMsg){
+                errorMsg.innerHTML = '';
+                errorMsg.classList.add('hide');
+                errorMsg.classList.remove("checked");
+            }
+        } else {
+            input.classList.add("invalid");
+            input.setCustomValidity(errorMessage ?? '');
+
+            if(errorMsg){
+                if(errorMessage !== undefined && errorMessage !== null && (typeof errorMessage !== 'string' || errorMessage.trim().length > 0)){
+                    errorMsg.innerHTML = errorMessage;
+                    errorMsg.classList.remove("hide");
+                    errorMsg.classList.add("checked");
+                } else {
+                    errorMsg.innerHTML = '';
+                    errorMsg.classList.add('hide');
+                    errorMsg.classList.remove("checked");
+                }
+            }
+
+            if(validMsg){
+                validMsg.classList.add('hide');
+                validMsg.classList.remove("checked");
+            }
+        }
+
+        return isValid;
+    }
 
     $("#sbmt").click(function(e){
         const form = $(this).closest('form.needs-validation').get(0);
@@ -182,9 +298,10 @@ $(document).ready(function(){
             e.preventDefault();
             e.stopPropagation();
             return;
-        } else if (!form.checkValidity() || !cityState) {
+        } else if (!form.checkValidity() || !cityState || !validatePhoneNumber($('#phoneNumberInput').get(0), true)) {
             e.preventDefault();
             e.stopPropagation();
+            validatePhoneNumber($('#phoneNumberInput').get(0))
             form.classList.add('was-validated');
             return;
         } else {
@@ -205,9 +322,38 @@ $(document).ready(function(){
             }
         }
 
+        if(phoneNumberInput !== undefined && phoneNumberInput !== null && phoneNumberInput.getNumber && phoneNumberInput.getSelectedCountryData){
+            const phoneNumber = phoneNumberInput.getNumber();
+            const country = phoneNumberInput.getSelectedCountryData();
+            const nmbrType = phoneNumberInput.getNumberType ? phoneNumberInput.getNumberType() : undefined;
+            if(country && typeof country === 'object' && Object.keys(country).length > 0){
+                if(nmbrType !== undefined && nmbrType !== null){
+                    if(typeof nmbrType === 'string'){
+                        nmbrType && (country['number-type'] = nmbrType);
+                    } else if(typeof nmbrType === 'number' && !isNaN(nmbrType)){
+                        if(window.intlTelInputUtils && window.intlTelInputUtils.numberType && 
+                            typeof window.intlTelInputUtils.numberType === 'object'){
+                                const nmbrTypStr = Object.keys(window.intlTelInputUtils.numberType).filter(key => {
+                                    return window.intlTelInputUtils.numberType[key] === nmbrType;
+                                })[0];
+                                if(nmbrTypStr !== undefined && nmbrTypStr !== null && typeof nmbrTypStr === 'string' 
+                                && nmbrTypStr.trim().length > 0){
+                                    country['number-type'] = nmbrTypStr
+                                }
+                        }
+                    }
+                }
+                
+                formData.push({name: 'phone-info', value: country});
+                const pi = formData && Array.isArray(formData) ? formData.findIndex(fd => fd.name === 'phone') : -1;
+                pi >= 0 && (formData[pi] = {...formData[pi], value: phoneNumber});
+                console.log('phoneNumber:', phoneNumber, 'country:', country);
+            }
+        }
+
         console.log(formData);
         let emailSubject = 'Commodity Ticket Information';
-        const finalFormData = formData.filter(fd => fd.name !== 'city-id' && fd.value !== undefined && fd.value !== null && `${fd.value}`.trim().length > 0).map((fd) => `${fd.name}: ${fd.value}`).join(';%0D%0A');
+        const finalFormData = formData.filter(fd => fd.name !== 'city-id' && fd.name !== 'phone-info' && fd.value !== undefined && fd.value !== null && `${fd.value}`.trim().length > 0).map((fd) => `${fd.name}: ${fd.value};`).join('%0D%0A');
         let emailBody = finalFormData;//JSON.stringify(finalFormData);
         
 

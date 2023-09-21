@@ -123,6 +123,10 @@ textarea.autoExpand {
     margin-bottom: 0px !important;
 }
 
+.invalid-feedback.checked {
+    display: block;
+}
+
 .form-control {
     font-size: 16px;
     font-weight: 700;
